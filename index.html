@@ -797,6 +797,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .tag { display: inline-block; font-size: 13px; font-weight: 600; padding: 2px 10px; border: 1.5px solid var(--ink); background: var(--sand); color: var(--ink); }
   .details { margin: 10px 0 0; padding-left: 18px; }
   .details li { margin: 6px 0; overflow-wrap: anywhere; }
+  .card .hint { margin: 12px 0 0; }
   .card.star { border-width: 3px; border-left-width: 10px; box-shadow: 4px 4px 0 var(--red); }
 </style>
 </head>
@@ -823,8 +824,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
 <section class="mapwrap" id="mapwrap" hidden aria-label="Karte mit allen Spots">
   <div id="map"></div>
-  <div class="mapask" id="mapask"></div>
-  <button class="locate" id="locate" type="button" aria-label="Meinen Standort zeigen">
+    <button class="locate" id="locate" type="button" aria-label="Meinen Standort zeigen">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
   </button>
   <div class="toast" id="toast" role="status" hidden></div>
@@ -832,9 +832,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 </section>
 
 <main id="main">
-  <section id="ask" aria-live="polite"></section>
-  <hr class="rule">
-  <div id="list"></div>
+      <div id="list"></div>
 </main>
 
 <footer>
@@ -875,14 +873,11 @@ svg.leaflet-image-layer.leaflet-interactive path {
     { id: "activity", title: "Aktivitäten", intro: "" }
   ];
 
-  const HINT = { title: "Bootstour auf dem Lago di Como",
-    text: "Unsere klare Empfehlung. Sie muss selbst gebucht werden, am besten vorher Anbieter und Fahrzeiten prüfen." };
-
   const ZUG = "Regionalzug ab Milano Centrale: ";
 
   const PLACES = [
     /* ---------- Sehenswert ---------- */
-    { id: "duomo", cats: ["sight"], featured: true, name: "Duomo di Milano", meta: "", note: "Hauptspot",
+    { id: "duomo", cats: ["sight"], name: "Duomo di Milano", meta: "", note: "Hauptspot",
       lat: 45.4640976, lng: 9.1919265, dest: "45.4640976,9.1919265", link: "https://maps.app.goo.gl/YEjP294tujvnmx9c7" },
     { id: "galleria", cats: ["sight"], name: "Galleria Vittorio Emanuele II", meta: "", note: "Berühmte Einkaufspassage",
       lat: 45.4658434, lng: 9.1899401, dest: "45.4658434,9.1899401", link: "https://maps.app.goo.gl/1zZ1gwgGrz8ADsWX7" },
@@ -922,7 +917,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
     /* ---------- Gelato und Süßes ---------- */
     { id: "chocolat", cats: ["sweet"], tag: "Gelato", icon: "🍨", name: "Chocolat", meta: "",
-      note: "Alle Gelatos sind crazy gut, aber das war unser Stammladen. Empfehlung: Dunkle Schokolade, Pistazie",
+      note: "Alle Gelatos sind crazy gut, aber das war mein Stammladen. Empfehlung: Dunkle Schokolade, Pistazie",
       lat: 45.4676959, lng: 9.1741848, dest: "45.4676959,9.1741848", link: "https://maps.app.goo.gl/hN39Rj9DdSmhT9MM9" },
     { id: "gelateria-musica", cats: ["sweet"], tag: "Gelato", icon: "🍨", name: "[LA] Gelateria della Musica", meta: "",
       note: "Toastbrot mit Marmelade schmeckt wie Toastbrot mit Marmelade!!",
@@ -950,15 +945,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
     /* ---------- Aktivitäten ---------- */
     { id: "kochkurs", cats: ["activity"], star: true, tag: "Event", icon: "⭐", name: "Pasta- und Tiramisu-Kochkurs mit Wein",
-      meta: "Di., 27. Oktober 2026 um 16:30 Uhr · Dauer 3 Stunden",
-      note: "Unser Geschenk an euch.",
-      details: [
-        "Treffpunkt: Restaurant „Come 'Na Vorta - Pasta e Vino Navigli“, Ripa di Porta Ticinese 3-5, 20143 Mailand MI. Bitte 5 Minuten vorher da sein (16:25 Uhr).",
-        "Der Kurs findet auf Englisch statt. Lebensmittelallergien bitte dem Anbieter vorher mitteilen.",
-        "Buchungsreferenz: GYGWZAKG23Y2 · PIN: 6sChyp6h. Kostenlos stornierbar bis 26. Oktober um 16:30 Uhr.",
-        'Anbieter: Cooking Italy, <a href="tel:+393773418113">+393773418113</a>, <a href="mailto:activity-provider-mmqdcudmljtyszth@reply.getyourguide.com">activity-provider-mmqdcudmljtyszth@reply.getyourguide.com</a>',
-        'GetYourGuide-Kundenservice: <a href="tel:+493083791488">+49 30 837 91488</a> (rund um die Uhr)'
-      ],
+      meta: "Di., 27. Oktober 2026, 16:30 Uhr (bitte 5 Minuten vorher da sein) · Dauer 3 Stunden",
+      note: "Mein Geschenk an euch.",
       ticket: "kochkurs-ticket.pdf",
       lat: 45.4530, lng: 9.1760, dest: "Ripa di Porta Ticinese 5, 20143 Milano", link: "https://www.google.com/maps/search/?api=1&query=Ripa+di+Porta+Ticinese+5+Milano" },
     { id: "duomo-tour", cats: ["activity"], tag: "Tour", icon: "🎟️", name: "Duomo Tour", meta: "", price: "ca. 22 €", note: "Tour auf und in den Dom",
@@ -978,7 +966,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
       lat: 45.4553, lng: 9.1722, dest: "Viale Papiniano, Milano", link: "https://www.google.com/maps/search/?api=1&query=Viale+Papiniano+Milano" },
     { id: "como", cats: ["activity"], tag: "Zugausflug", icon: "🚆", mode: "transit", name: "Como", meta: ZUG + "ca. 40 Min.",
       note: "Wenn ihr Zeit habt, müsst ihr unbedingt nach Como an den Lago di Como. Ein halber Tag lohnt sich auf jeden Fall.",
-      quote: "Wenn man hier ist, versteht man gar nicht mehr, wie die Menschheit darauf gekommen ist, Excel zu erfinden.",
+      hint: { title: "Bootstour auf dem Lago di Como", text: "Meine klare Empfehlung. Sie muss selbst gebucht werden, am besten vorher Anbieter und Fahrzeiten prüfen. Eine längere Bootsfahrt ist möglich, zu George Clooneys Villa und zum Drehort von Star Wars (Villa del Balbianello)." },
       lat: 45.8100, lng: 9.0860, dest: "Como, Italien", link: "https://www.google.com/maps/search/?api=1&query=Como+Italien" },
     { id: "balbianello", cats: ["activity"], tag: "Zugausflug", icon: "🚆", mode: "transit", name: "Villa del Balbianello", meta: "",
       note: "Hier wurde die Hochzeit von Anakin und Padmé aus Star Wars gedreht.",
@@ -1003,22 +991,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
       lat: 44.8015, lng: 10.3279, dest: "Parma, Italien", link: "https://www.google.com/maps/search/?api=1&query=Parma+Italien" }
   ];
 
-  const PROMPTS = [
-    { id: "espresso", label: "Lust auf einen Espresso?", spots: ["prada"],
-      msg: "Geht doch mal zum Prada-Store um die Ecke. Dort findet ihr eine Treppe zum Prada Café. Gönnt euch einen Espresso und genießt die Aussicht." },
-    { id: "sandwich", label: "Lust auf ein Sandwich?", spots: ["antico", "luini"],
-      msg: "Bei All'Antico Vinaio sind die Focaccia-Sandwiches wirklich großzügig belegt. Und wenn danach noch Platz ist, gibt es bei Luini kleine Snacks." },
-    { id: "suesses", label: "Lust auf Süßes?", spots: ["aroma", "motta"],
-      msg: "Pistazien-Croissant! Bei Aroma Napoletano ist es riesig, am Hauptbahnhof bei Motta sogar doppelt gefüllt." },
-    { id: "eis", label: "Lust auf ein Eis?", spots: ["chocolat", "gelateria-musica"],
-      msg: "Dunkle Schokolade und Pistazie bei Chocolat sind Pflicht. Und in Navigli wartet ein Eis, das nach Toastbrot mit Marmelade schmeckt. Klingt komisch, schmeckt genau so." },
-    { id: "kunst", label: "Lust auf Kunst?", spots: ["brera-kunst", "leonardo3", "fondazione-prada"],
-      msg: "Große Gemälde in Brera, Leonardos Erfindungen im Leonardo3 und das Prada-Kunstmuseum. Such dir eins aus, oder nimm alle drei." },
-    { id: "schnaeppchen", label: "Lust auf Schnäppchen?", spots: ["papiniano"],
-      msg: "Dienstag ist euer Tag. Auf dem Markt in der Viale Papiniano gibt es Designer-Restposten zu kleinen Preisen. Aber nur bis 14 Uhr, danach ist Feierabend." },
-    { id: "seeluft", label: "Lust auf Seeluft?", spots: ["como"],
-      msg: "Setzt euch in den Regionalzug nach Como. Nach etwa einer Stunde steht ihr am See, und der Rest der Welt macht plötzlich Pause." }
-  ];
+  const PROMPTS = [];
 
   const $ = id => document.getElementById(id);
   const ICON_NAV = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M3 11 21 3l-8 18-2-8-8-2z"/></svg>';
@@ -1079,6 +1052,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
     const quote = p.quote ? '<blockquote class="quote">' + p.quote + "</blockquote>" : "";
     const price = p.price ? '<span class="pill">' + p.price + "</span>" : "";
     const tag = p.tag ? '<div class="tags"><span class="tag">' + (p.icon ? p.icon + " " : "") + p.tag + "</span></div>" : "";
+    const hint = p.hint ? '<aside class="hint"><b>' + p.hint.title + "</b><p>" + p.hint.text + "</p></aside>" : "";
     const details = p.details ? '<ul class="details">' + p.details.map(x => "<li>" + x + "</li>").join("") + "</ul>" : "";
     const ticket = p.ticket ? '<a class="btn ghost" href="' + p.ticket + '" target="_blank" rel="noopener">Ticket (PDF)</a>' : "";
     const d = distText(p);
@@ -1086,7 +1060,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
       '<article class="card' + (p.featured ? " featured" : "") + (p.star ? " star" : "") + '" data-cat="' + p.cats[0] + '">' + tag +
         "<h3>" + (p.star ? "★ " : "") + p.name + "</h3>" +
         metaLine(p, d) +
-        (p.note ? '<p class="note">' + p.note + "</p>" : "") + details + quote +
+        (p.note ? '<p class="note">' + p.note + "</p>" : "") + details + quote + hint +
         (price || statusBadge(p) ? "<div>" + price + statusBadge(p) + "</div>" : "") +
         '<div class="actions">' +
           '<a class="btn primary" href="' + routeUrl(p) + '" target="_blank" rel="noopener">' + ICON_NAV + "Route starten</a>" +
@@ -1098,19 +1072,19 @@ svg.leaflet-image-layer.leaflet-interactive path {
   }
 
     const metaLine = (p, d) => { const t = [p.meta, d].filter(Boolean).join(" · "); return t ? '<p class="meta">' + t + "</p>" : ""; };
-  const hintHtml = () => '<aside class="hint"><b>' + HINT.title + "</b><p>" + HINT.text + "</p></aside>";
-
   function groupHtml(g, ids) {
     if (!ids.length) return "";
     if (user && g.id !== "activity") ids = ids.slice().sort((a, b) => meters(user, PLACES[a]) - meters(user, PLACES[b]));
     return '<h2 class="group-title">' + g.title + "</h2>" + (g.intro ? '<p class="group-intro">' + g.intro + "</p>" : "") +
-      ids.map(i => cardHtml(PLACES[i], i)).join("") + (g.id === "activity" ? hintHtml() : "");
+      ids.map(i => cardHtml(PLACES[i], i)).join("");
   }
 
   function renderList() {
     let html = "";
     if (active === "all") {
-      GROUPS.forEach(g => { html += groupHtml(g, PLACES.map((p, i) => i).filter(i => PLACES[i].cats[0] === g.id)); });
+      const star = PLACES.findIndex(p => p.star);
+      if (star >= 0) html += cardHtml(PLACES[star], star);
+      GROUPS.forEach(g => { html += groupHtml(g, PLACES.map((p, i) => i).filter(i => PLACES[i].cats[0] === g.id && !PLACES[i].star)); });
     } else {
       html = groupHtml(GROUPS.find(g => g.id === active), visible());
     }
@@ -1120,13 +1094,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
   const askChips = () => PROMPTS.map(a => '<button class="ask-btn" type="button" data-ask="' + a.id + '" aria-pressed="' + (a.id === askId) + '">' + a.label + "</button>").join("");
 
-  function renderAsk() {
-    const a = askObj();
-    $("ask").innerHTML =
-      '<h2 class="ask-title">Gerade Lust auf …?</h2><div class="asks">' + askChips() + "</div>" +
-      (a ? '<div class="bubble">' + a.msg + "<small>Tipp von eurem Trauzeugen</small></div>" + a.spots.map(id => cardHtml(PLACES[idx(id)], idx(id))).join("") : "");
-    $("mapask").innerHTML = askChips();
-  }
+  function renderAsk() {}
 
   function setAsk(id) {
     askId = askId === id ? null : id;
@@ -1243,7 +1211,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
     if (inAsk) h += '<p class="msg">' + a.msg + "</p>";
     if (selected !== null) {
       const p = PLACES[selected], d = distText(p);
-      h += "<h3>" + p.name + "</h3>" + (d ? '<p class="meta">' + d + "</p>" : "") + '<p class="note">' + p.note + "</p>" + (p.quote ? '<blockquote class="quote">' + p.quote + "</blockquote>" : "") + (p.details ? '<ul class="details">' + p.details.map(x => "<li>" + x + "</li>").join("") + "</ul>" : "") + (p.price ? '<div><span class="pill">' + p.price + "</span></div>" : "") + statusBadge(p) +
+      h += "<h3>" + p.name + "</h3>" + (d ? '<p class="meta">' + d + "</p>" : "") + '<p class="note">' + p.note + "</p>" + (p.quote ? '<blockquote class="quote">' + p.quote + "</blockquote>" : "") + (p.details ? '<ul class="details">' + p.details.map(x => "<li>" + x + "</li>").join("") + "</ul>" : "") + (p.hint ? '<aside class="hint"><b>' + p.hint.title + "</b><p>" + p.hint.text + "</p></aside>" : "") + (p.price ? '<div><span class="pill">' + p.price + "</span></div>" : "") + statusBadge(p) +
         '<div class="actions"><a class="btn primary" href="' + routeUrl(p) + '" target="_blank" rel="noopener">' + ICON_NAV + "Route starten</a>" +
         '<a class="btn ghost" href="' + detailUrl(p) + '" target="_blank" rel="noopener">' + ICON_PIN + "In Maps</a>" + (p.ticket ? '<a class="btn ghost" href="' + p.ticket + '" target="_blank" rel="noopener">Ticket (PDF)</a>' : "") + "</div>";
     } else {
